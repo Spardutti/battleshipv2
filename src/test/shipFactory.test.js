@@ -1,19 +1,16 @@
-import ship from "../functions/shipFactory";
+import shipFactory from "../Components/ShipFactory";
 
-let tiny = ship(4);
-
-test("ship length", () => {
-  expect(tiny.length).toBe(4);
+test("create ship with length 3", () => {
+  expect(shipFactory(3).hitPoints.length).toBe(3);
 });
 
-test("ship hp", () => {
-  expect(tiny.hitPoints.length).toBe(4);
+test("receive one attack", () => {
+  expect(shipFactory(2).hit()).toBe("x");
 });
 
-test("attacked position", () => {
-  expect(tiny.hitPos(3)).toBe(true);
-});
-
-test("is ship sunk", () => {
-  expect(tiny.isSunk()).toBe(false);
+let boat = shipFactory(2);
+boat.hit();
+boat.hit();
+test("check isSunk", () => {
+  expect(boat.isSunk()).toBe(true);
 });
