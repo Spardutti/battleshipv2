@@ -64,7 +64,8 @@ const gameBoard = (cols, rows) => {
           } else return (shipPlaced = false);
         }
       });
-      //roll for aligment
+             return shipPlaced;
+ 
     },
     receiveAttack(col, row) {
       if (this.board[col][row] === "sea") {
@@ -73,8 +74,20 @@ const gameBoard = (cols, rows) => {
         //remove eventListener
       }
       //TODO HERE
-      if (this.board === this.ships) {
+      if (this.board[col][row] !== "attacked" && this.board[col][row] !== "sea") {
+        let ship = this.board[col][row];
+        let index = this.ships.indexOf(ship);
+        this.ships[index].hit();
+        if (this.ships[index].isSunk()) {
+          //check for all ships destroyed
+          this.ships.slice(index, 1);
+      
+        }
+        if (this.ships.length === 0) {
+          return "winner"
+        }
       }
+      return this.board[col][row]
     },
   };
 };

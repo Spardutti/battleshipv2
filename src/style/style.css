@@ -1,0 +1,23 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+}
+
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.squares{
+    border: 1px solid black;
+    background-color: blue;
+}
+
+.ship {
+    border: 1px solid black;
+    background-color: red;
+}
+
+.parent {
+    margin: auto;
+}
