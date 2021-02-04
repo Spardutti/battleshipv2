@@ -18,7 +18,7 @@ const PlayerBoard = (props) => {
                       data-row={pos}
                       className="ship center-align"
                     >
-                      {index} {pos}
+                      Ship
                     </div>
                   );
                 }

@@ -69,7 +69,7 @@ const gameBoard = (cols, rows) => {
     },
     receiveAttack(col, row) {
       if (this.board[col][row] === "sea") {
-        this.board[col][row] = "attacked";
+        this.board[col][row] = "attacked";  
         //next player
         //remove eventListener
       }
@@ -80,10 +80,11 @@ const gameBoard = (cols, rows) => {
         this.ships[index].hit();
         if (this.ships[index].isSunk()) {
           //check for all ships destroyed
-          this.ships.slice(index, 1);
+          this.ships.splice(index, 1);
       
         }
         if (this.ships.length === 0) {
+          alert("WInner")
           return "winner"
         }
       }
