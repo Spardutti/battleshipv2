@@ -19,15 +19,37 @@ const ComputerBoard = (props) => {
                       Sea
                     </div>
                   );
-                } else {
+                }
+                if (typeof props.computerBoard[index][pos] === "object") {
                   return (
                     <div
                       data-col={index}
                       data-row={pos}
                       className="ship center-align"
-                      onClick={props.attackShip}
+                      onClick={props.attack}
                     >
                       Ship
+                    </div>
+                  );
+                }
+                if (props.computerBoard[index][pos] === "hit") {
+                  return (
+                    <div
+                      data-col={index}
+                      data-row={pos}
+                      className="hit center-align"
+                    >
+                      hit
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      data-col={index}
+                      data-row={pos}
+                      className="attacked center-align"
+                    >
+                      Att
                     </div>
                   );
                 }
