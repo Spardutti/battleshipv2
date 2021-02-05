@@ -8,11 +8,11 @@ import "./style/style.css";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
-  const [playerBoard, setPlayerBoard] = useState(gameBoard(9, 9));
+  const [playerBoard, setPlayerBoard] = useState(gameBoard(3, 3));
   const [computerBoard, setComputerBoard] = useState(gameBoard(9, 9));
   const [updateDom, setUpdateDom] = useState(false);
   const [player, setPlayer] = useState(true);
-  const [ winner, setWinner ] = useState(false);
+  const [winner, setWinner] = useState(false);
 
   //FIGURE HOW TO DISABLE CLICK ON DIV AFTER IT HAVE BEEN CLICKED;
 
@@ -42,15 +42,29 @@ function App() {
     if (!player) {
       let col = Math.floor(Math.random() * playerBoard.board.length);
       let row = Math.floor(Math.random() * playerBoard.board.length);
+
+      while (
+        (playerBoard.board[col][row] === "attacked" ||
+          playerBoard.board[col][row] === "hit") &&
+        !winner
+      ) {
+        col = Math.floor(Math.random() * playerBoard.board.length);
+        row = Math.floor(Math.random() * playerBoard.board.length);
+      }
+      playerBoard.receiveAttack(col, row);
       setTimeout(() => {
-        playerBoard.receiveAttack(col, row);
-        if (playerBoard.receiveAttack(col, row) === "hit") {
+        if (playerBoard.receiveAttack(col, row) === "attacked") {
+          setPlayer(true);
+        } else {
           setUpdateDom(true);
+
           if (playerBoard.ships.length === 0) {
             setWinner(true);
+            return;
           }
-        } else {
-          setPlayer(true);
+          setTimeout(() => {
+            computerAttack();
+          }, 500);
         }
       }, 500);
     }
@@ -67,7 +81,9 @@ function App() {
     <div>
       {welcome ? (
         <WelcomeScreen playGame={playGame} />
-      ) : winner ? <h1>Win</h1> : (
+      ) : winner ? (
+        <h1>Win</h1>
+      ) : (
         <div className="container">
           <h1 className="center-align">
             {player ? `Player's Turn!` : `Computer's Turn`}
@@ -75,7 +91,8 @@ function App() {
           <div className="board-grid">
             <PlayerBoard playerBoard={playerBoard.board} winner={winner} />
             <ComputerBoard
-              computerBoard={computerBoard.board} winner={winner}
+              computerBoard={computerBoard.board}
+              winner={winner}
               attack={attack}
             />
           </div>

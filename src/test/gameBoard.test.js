@@ -34,3 +34,13 @@ test("attack board", () => {
   expect(board.receiveAttack(0,0)).toBe("attacked");
 })
 */
+
+
+if (playerBoard.receiveAttack(col, row) === "hit") {
+  //game freeze if computer attack hits a ship. need to make a new attack.
+  setUpdateDom(true);
+  if (playerBoard.ships.length === 0) {
+    setWinner(true);
+  }
+  setPlayer(false);
+}

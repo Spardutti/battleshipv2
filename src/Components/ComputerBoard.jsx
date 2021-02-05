@@ -42,7 +42,7 @@ const ComputerBoard = (props) => {
                       hit
                     </div>
                   );
-                } else {
+                } if(props.computerBoard[index][pos] === "attacked") {
                   return (
                     <div
                       data-col={index}
