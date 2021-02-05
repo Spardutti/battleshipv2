@@ -1,2 +1,0 @@
-.grid-container{display:grid;grid-template-columns:repeat(9,40px)}.board-grid{display:grid;grid-template-columns:repeat(2,1fr)}.squares{background-color:#00f}.ship,.squares{border:1px solid #000}.ship{background-color:red}.parent{margin:auto}.attacked{background-color:#ff0}.attacked,.hit{border:1px solid #000}.hit{background-color:orange}
-/*# sourceMappingURL=main.2198afca.chunk.css.map */
