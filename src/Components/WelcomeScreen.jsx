@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Card, Row, Col} from "react-materialize"
 import "materialize-css/dist/css/materialize.min.css"
 
 const WelcomeScreen = props => {

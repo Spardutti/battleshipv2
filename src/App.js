@@ -5,14 +5,17 @@ import PlayerBoard from "./Components/PlayerBoard";
 import ComputerBoard from "./Components/ComputerBoard";
 import gameBoard from "./Components/GameBoard";
 import "./style/style.css";
+import WinnerScreen from "./Components/Winner";
+import RandomizeShip from "./Components/RandomizeShip";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
-  const [playerBoard, setPlayerBoard] = useState(gameBoard(3, 3));
+  const [playerBoard, setPlayerBoard] = useState(gameBoard(9, 9));
   const [computerBoard, setComputerBoard] = useState(gameBoard(9, 9));
   const [updateDom, setUpdateDom] = useState(false);
   const [player, setPlayer] = useState(true);
   const [winner, setWinner] = useState(false);
+  const [gameOn, setGameOn] = useState(false);
 
   //FIGURE HOW TO DISABLE CLICK ON DIV AFTER IT HAVE BEEN CLICKED;
 
@@ -24,6 +27,7 @@ function App() {
 
   const attack = (e) => {
     if (player) {
+      setGameOn(true);
       let col = e.target.getAttribute("data-col");
       let row = e.target.getAttribute("data-row");
       computerBoard.receiveAttack(col, row);
@@ -69,6 +73,13 @@ function App() {
       }, 500);
     }
   };
+
+  const newGame = () => {
+    setWinner(false);
+    setWelcome(true);
+    setPlayerBoard(gameBoard(9, 9));
+    setComputerBoard(gameBoard(9, 9));
+  };
   useEffect(() => {
     computerAttack();
   }, [player]);
@@ -77,12 +88,23 @@ function App() {
     setUpdateDom(false);
   }, [updateDom]);
 
+  useEffect(() => {
+    playerBoard.placeShip();
+
+    console.log("udpate");
+  }, [playerBoard]);
+
+  const randomizeShip = () => {
+    setPlayerBoard(gameBoard(9, 9));
+    setUpdateDom(true);
+  };
+
   return (
     <div>
       {welcome ? (
         <WelcomeScreen playGame={playGame} />
       ) : winner ? (
-        <h1>Win</h1>
+        <WinnerScreen player={player} newGame={newGame} />
       ) : (
         <div className="container">
           <h1 className="center-align">
@@ -95,6 +117,7 @@ function App() {
               winner={winner}
               attack={attack}
             />
+            {gameOn ? null : <RandomizeShip randomizeShip={randomizeShip} />}
           </div>
         </div>
       )}

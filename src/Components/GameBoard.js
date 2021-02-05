@@ -3,16 +3,23 @@ import shipFactory from "./ShipFactory";
 const gameBoard = (cols, rows) => {
   return {
     board: new Array(rows).fill().map(() => new Array(cols).fill("sea")),
-    ships: [shipFactory(3)],
+    ships: [
+      shipFactory(2),
+      shipFactory(3),
+      shipFactory(4),
+      shipFactory(5),
+    ],
     //----------------------------PLACESHIP
     placeShip() {
       //variables
       let col, row;
-      let shipPlaced = false;
       let horizontal = true;
       let rndNum = Math.floor(Math.random() * 10);
 
       this.ships.forEach((ship, index) => {
+        let shipPlaced = false;
+
+        console.log(ship.hitPoints);
         if (rndNum > 5) {
           horizontal = false;
         }
@@ -32,7 +39,7 @@ const gameBoard = (cols, rows) => {
               for (let i = 1; i < ship.hitPoints.length; i++) {
                 if (this.board[col + i][row] === "sea") {
                   freeSpaces++;
-                } else return (shipPlaced = false);
+                } 
               }
               if (freeSpaces === ship.hitPoints.length) {
                 for (let i = 0; i < ship.hitPoints.length; i++) {
@@ -52,7 +59,7 @@ const gameBoard = (cols, rows) => {
               for (let i = 1; i < ship.hitPoints.length; i++) {
                 if (this.board[col][row + i] === "sea") {
                   freeSpaces++;
-                } else return (shipPlaced = false);
+                } 
               }
               if (freeSpaces === ship.hitPoints.length) {
                 for (let i = 0; i < ship.hitPoints.length; i++) {
@@ -61,10 +68,10 @@ const gameBoard = (cols, rows) => {
                 return (shipPlaced = true);
               }
             }
-          } else return (shipPlaced = false);
+          } 
         }
+        return shipPlaced;
       });
-      return shipPlaced;
     },
     receiveAttack(col, row) {
       if (this.board[col][row] === "sea") {
@@ -73,17 +80,16 @@ const gameBoard = (cols, rows) => {
         //remove eventListener
       }
       //TODO HERE
-      if ( typeof this.board[col][row] === "object") {
+      if (typeof this.board[col][row] === "object") {
         let ship = this.board[col][row];
         let index = this.ships.indexOf(ship);
-        this.board[col][row] = "hit"
+        this.board[col][row] = "hit";
         this.ships[index].hit();
         if (this.ships[index].isSunk()) {
           //check for all ships destroyed
           this.ships.splice(index, 1);
         }
         if (this.ships.length === 0) {
-          
           return "winner";
         }
       }

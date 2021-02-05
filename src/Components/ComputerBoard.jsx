@@ -1,4 +1,7 @@
 import React from "react";
+import uniqid from "uniqid";
+
+
 const ComputerBoard = (props) => {
   return (
     <div className="parent center-align">
@@ -6,11 +9,11 @@ const ComputerBoard = (props) => {
       <div className="grid-container">
         {props.computerBoard.map((col, index) => {
           return (
-            <div className="center-align">
+            <div key={uniqid()} className="center-align">
               {col.map((row, pos) => {
                 if (props.computerBoard[index][pos] === "sea") {
                   return (
-                    <div
+                    <div key={uniqid()}
                       data-col={index}
                       data-row={pos}
                       onClick={props.attack}
@@ -22,7 +25,7 @@ const ComputerBoard = (props) => {
                 }
                 if (typeof props.computerBoard[index][pos] === "object") {
                   return (
-                    <div
+                    <div key={uniqid()}
                       data-col={index}
                       data-row={pos}
                       className="ship center-align"
@@ -34,7 +37,7 @@ const ComputerBoard = (props) => {
                 }
                 if (props.computerBoard[index][pos] === "hit") {
                   return (
-                    <div
+                    <div key={uniqid()}
                       data-col={index}
                       data-row={pos}
                       className="hit center-align"
@@ -44,7 +47,7 @@ const ComputerBoard = (props) => {
                   );
                 } if(props.computerBoard[index][pos] === "attacked") {
                   return (
-                    <div
+                    <div key={uniqid()}
                       data-col={index}
                       data-row={pos}
                       className="attacked center-align"
