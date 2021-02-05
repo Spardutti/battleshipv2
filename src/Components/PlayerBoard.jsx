@@ -5,7 +5,7 @@ import uniqid from "uniqid";
 const PlayerBoard = (props) => {
   return (
     <div className="parent center-align">
-      <h3>Player</h3>
+      <h3 className="current-player">Player</h3>
       <div className="grid-container">
         {props.playerBoard.map((col, index) => {
           return (
@@ -19,7 +19,7 @@ const PlayerBoard = (props) => {
                       onClick={props.attack}
                       className="squares "
                     >
-                      Sea
+                      
                     </div>
                   );
                 }
@@ -30,7 +30,7 @@ const PlayerBoard = (props) => {
                       className="ship center-align"
                       onClick={props.attack}
                     >
-                      Ship
+                      
                     </div>
                   );
                 }
@@ -40,7 +40,7 @@ const PlayerBoard = (props) => {
                       data-row={pos}
                       className="hit center-align"
                     >
-                      hit
+                      
                     </div>
                   );
                 } else {
@@ -49,7 +49,7 @@ const PlayerBoard = (props) => {
                       data-row={pos}
                       className="attacked center-align"
                     >
-                      Att
+                      
                     </div>
                   );
                 }

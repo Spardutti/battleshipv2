@@ -36,3 +36,47 @@
     margin-top: 100px;
   }
   
+  @media only screen and (max-width: 400px){
+    .welcome {
+      margin-top: 160px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(9, 18px);
+    }
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 170px);
+    }
+    .squares  {
+      width: 18px;
+      height: 18px;
+    }
+    .ship {
+      width: 18px;
+      height: 18px;
+    }
+    .attacked {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hit {
+      width: 18px;
+      height: 18px;
+    }
+    .board-grid {
+      width: 20px;
+    }
+    .current-player {
+      font-size: 30px;
+    }
+    .parent {
+      margin-left: 0px;
+    }
+    .random {
+      width: 130px;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+  }

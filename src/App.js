@@ -7,6 +7,7 @@ import gameBoard from "./Components/GameBoard";
 import "./style/style.css";
 import WinnerScreen from "./Components/Winner";
 import RandomizeShip from "./Components/RandomizeShip";
+import { act } from "react-dom/test-utils";
 
 function App() {
   const [welcome, setWelcome] = useState(true);
@@ -16,6 +17,8 @@ function App() {
   const [player, setPlayer] = useState(true);
   const [winner, setWinner] = useState(false);
   const [gameOn, setGameOn] = useState(false);
+  const [intialLoad, setInitialLoad] = useState(true);
+  const [action, setAction ] = useState("");
 
   //FIGURE HOW TO DISABLE CLICK ON DIV AFTER IT HAVE BEEN CLICKED;
 
@@ -23,6 +26,7 @@ function App() {
     setWelcome(false);
     playerBoard.placeShip();
     computerBoard.placeShip();
+    setInitialLoad(false);
   };
 
   const attack = (e) => {
@@ -33,11 +37,13 @@ function App() {
       computerBoard.receiveAttack(col, row);
       if (computerBoard.receiveAttack(col, row) === "hit") {
         //keeps playing
+        setAction("Player Hit!")
         setUpdateDom(true);
         if (computerBoard.ships.length === 0) {
           setWinner(true);
         }
       } else {
+        setAction("Player Miss!")
         setPlayer(false);
       }
     }
@@ -59,7 +65,10 @@ function App() {
       setTimeout(() => {
         if (playerBoard.receiveAttack(col, row) === "attacked") {
           setPlayer(true);
+          setAction("Computer Miss!")
         } else {
+          setAction("Computer Hits!")
+
           setUpdateDom(true);
 
           if (playerBoard.ships.length === 0) {
@@ -70,13 +79,15 @@ function App() {
             computerAttack();
           }, 500);
         }
-      }, 500);
+      }, 1000);
     }
   };
 
   const newGame = () => {
     setWinner(false);
     setWelcome(true);
+    setInitialLoad(true);
+    gameOn(false);
     setPlayerBoard(gameBoard(9, 9));
     setComputerBoard(gameBoard(9, 9));
   };
@@ -89,14 +100,18 @@ function App() {
   }, [updateDom]);
 
   useEffect(() => {
-    playerBoard.placeShip();
+    if (intialLoad === false) {
+      playerBoard.placeShip();
+    }
 
     console.log("udpate");
   }, [playerBoard]);
 
   const randomizeShip = () => {
-    setPlayerBoard(gameBoard(9, 9));
-    setUpdateDom(true);
+    if (intialLoad === false) {
+      setPlayerBoard(gameBoard(9, 9));
+      setUpdateDom(true);
+    }
   };
 
   return (
@@ -109,7 +124,8 @@ function App() {
         <div className="container">
           <h1 className="center-align">
             {player ? `Player's Turn!` : `Computer's Turn`}
-          </h1>
+              </h1>
+              <p className="center-align" >{action}</p>
           <div className="board-grid">
             <PlayerBoard playerBoard={playerBoard.board} winner={winner} />
             <ComputerBoard

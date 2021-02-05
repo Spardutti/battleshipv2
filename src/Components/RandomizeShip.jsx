@@ -4,7 +4,7 @@ const RandomizeShip = props => {
 
 
     return (
-        <button onClick={props.randomizeShip}>Randomize Ships</button>
+        <button className="random btn waves-effect waves-red" onClick={props.randomizeShip}>Randomize</button>
     )
 }
 
