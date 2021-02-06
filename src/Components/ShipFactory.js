@@ -1,4 +1,5 @@
 const shipFactory = (length) => {
+  
   return {
     hitPoints: new Array(length).fill("o"),
     hit() {

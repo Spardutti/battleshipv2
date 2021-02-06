@@ -2,10 +2,17 @@
   display: grid;
   grid-template-columns: repeat(9, 40px);
 }
-
+body {
+  background-color: black;
+  color: yellow
+}
 .board-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2);
+  grid-template-areas:
+    "player computer"
+    "random ships";
 }
 
 .squares {
@@ -45,10 +52,28 @@
 }
 .random {
   width: 160px;
-  margin: 50px auto;
+  margin: 40px auto;
+  grid-area: random;
+}
+.remaining-ships {
+  grid-area: ships;
+  display: grid;
+  grid-template-columns: repeat(6, 40px);
+  margin: 40px auto;
 }
 
-
+.square-left {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  background-color: red;
+}
+.square-hit {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  background-color: orange;
+}
 
 @media only screen and (max-width: 400px) {
   .welcome {
@@ -92,5 +117,25 @@
     width: 130px;
     margin-top: 20px;
     font-size: 15px;
+  }
+
+  .remaining-ships {
+    grid-area: ships;
+    display: grid;
+    grid-template-columns: repeat(6, 18px);
+    margin: 20px auto;
+  }
+
+  .square-left {
+    border: 1px solid black;
+    height: 18px;
+    width: 18px;
+    background-color: red;
+  }
+  .square-hit {
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+    background-color: orange;
   }
 }

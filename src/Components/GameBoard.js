@@ -5,6 +5,8 @@ const gameBoard = (cols, rows) => {
     board: new Array(rows).fill().map(() => new Array(cols).fill("sea")),
     ships: [
       shipFactory(2),
+      shipFactory(2),
+      shipFactory(3),
       shipFactory(3),
       shipFactory(4),
       shipFactory(5),
@@ -19,7 +21,6 @@ const gameBoard = (cols, rows) => {
       this.ships.forEach((ship, index) => {
         let shipPlaced = false;
 
-        console.log(ship.hitPoints);
         if (rndNum > 5) {
           horizontal = false;
         }

@@ -7,7 +7,8 @@ import gameBoard from "./Components/GameBoard";
 import "./style/style.css";
 import WinnerScreen from "./Components/Winner";
 import RandomizeShip from "./Components/RandomizeShip";
-import { act } from "react-dom/test-utils";
+import ComputerShips from "./Components/ComputerShips";
+import { motion } from "framer-motion"
 
 function App() {
   const [welcome, setWelcome] = useState(true);
@@ -18,17 +19,16 @@ function App() {
   const [winner, setWinner] = useState(false);
   const [gameOn, setGameOn] = useState(false);
   const [intialLoad, setInitialLoad] = useState(true);
-  const [action, setAction ] = useState("");
+  const [action, setAction] = useState("");
 
-  //FIGURE HOW TO DISABLE CLICK ON DIV AFTER IT HAVE BEEN CLICKED;
-
+  // Start the game and set initialload false to prevent bugs
   const playGame = () => {
     setWelcome(false);
     playerBoard.placeShip();
     computerBoard.placeShip();
     setInitialLoad(false);
   };
-
+  //attack the computer board
   const attack = (e) => {
     if (player) {
       setGameOn(true);
@@ -37,17 +37,18 @@ function App() {
       computerBoard.receiveAttack(col, row);
       if (computerBoard.receiveAttack(col, row) === "hit") {
         //keeps playing
-        setAction("Player Hit!")
+        setAction("Player Hit!");
         setUpdateDom(true);
         if (computerBoard.ships.length === 0) {
           setWinner(true);
         }
       } else {
-        setAction("Player Miss!")
+        setAction("Player Miss!");
         setPlayer(false);
       }
     }
   };
+  //randomize the computer attack on the player board
   const computerAttack = () => {
     if (!player) {
       let col = Math.floor(Math.random() * playerBoard.board.length);
@@ -65,9 +66,9 @@ function App() {
       setTimeout(() => {
         if (playerBoard.receiveAttack(col, row) === "attacked") {
           setPlayer(true);
-          setAction("Computer Miss!")
+          setAction("Computer Miss!");
         } else {
-          setAction("Computer Hits!")
+          setAction("Computer Hits!");
 
           setUpdateDom(true);
 
@@ -82,12 +83,13 @@ function App() {
       }, 1000);
     }
   };
-
+  //set everythign to default to begin a new game
+  //and reset the board to prevent bugs
   const newGame = () => {
     setWinner(false);
     setWelcome(true);
     setInitialLoad(true);
-    gameOn(false);
+    setGameOn(false);
     setPlayerBoard(gameBoard(9, 9));
     setComputerBoard(gameBoard(9, 9));
   };
@@ -103,8 +105,6 @@ function App() {
     if (intialLoad === false) {
       playerBoard.placeShip();
     }
-
-    console.log("udpate");
   }, [playerBoard]);
 
   const randomizeShip = () => {
@@ -124,8 +124,8 @@ function App() {
         <div className="container">
           <h1 className="center-align">
             {player ? `Player's Turn!` : `Computer's Turn`}
-              </h1>
-              <p className="center-align" >{action}</p>
+          </h1>
+          <p className="center-align">{action}</p>
           <div className="board-grid">
             <PlayerBoard playerBoard={playerBoard.board} winner={winner} />
             <ComputerBoard
@@ -134,6 +134,7 @@ function App() {
               attack={attack}
             />
             {gameOn ? null : <RandomizeShip randomizeShip={randomizeShip} />}
+            <ComputerShips ships={computerBoard.ships} />
           </div>
         </div>
       )}
