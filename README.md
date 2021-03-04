@@ -1,5 +1,6 @@
 # BattleShip!
 
+Link al juego:
 [BattleShip Game](https://spardutti.github.io/battleshipv2/).
 
 Juego clasico de Batalla Naval, donde cada jugador ataca por turnos
